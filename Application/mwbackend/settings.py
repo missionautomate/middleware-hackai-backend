@@ -58,7 +58,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
-    'middleware-hackai-frontend.azurewebsites.net'
+    'http://middleware-hackai-frontend.azurewebsites.net'
 )
 
 ROOT_URLCONF = 'mwbackend.urls'
