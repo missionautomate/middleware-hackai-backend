@@ -25,7 +25,7 @@ SECRET_KEY = 'i3zsk=@pakkv8$5$o1-sx7c+5b*g^3d%5kt-00*8uq+ar4wzw='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['middleware-hackai-backend.azurewebsites.net']
+ALLOWED_HOSTS = ['https://middleware-hackai-backend.azurewebsites.net', 'https://middleware-hackai-frontend.azurewebsites.net', 'localhost']
 
 
 # Application definition
