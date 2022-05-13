@@ -2,7 +2,7 @@ name: Build and Deploy Python app to Azure
 on:
   push:
     branches:
-      - master
+      - 25-migrate-frontend-code-id25
 
 env:
   AZURE_WEBAPP_NAME: "middleware-hackai-backend"    # set this to your application's name
@@ -16,7 +16,7 @@ env:
 
 jobs:
   Build:
-    name: Build and Run tests
+    name: Build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -29,20 +29,6 @@ jobs:
       continue-on-error: false
       run: |
         pip install -r Application/requirements.txt
-
-    - name: Pytest
-      continue-on-error: false
-      run: |
-        mkdir testresults
-        pip install pytest && pytest Tests/unit_tests --junitxml=./testresults/test-results.xml && pip install pycmd && py.cleanup Tests/
-
-    # Uploading unit test results to artifact store
-    - name: Upload unit test results to Artifact
-      continue-on-error: false
-      uses: actions/upload-artifact@v2
-      with:
-        name: UnitTestResults
-        path: ./testresults/test-results.xml
 
     - name: Building web app
       uses: azure/appservice-build@v2-beta
@@ -135,29 +121,3 @@ jobs:
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-
-  FunctionalTests:
-    name: Run Functional tests
-    runs-on: windows-latest
-    needs: Deploy
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-
-    # Run functional tests
-    - name: Run Functional tests
-      continue-on-error: false
-      run: |
-        mkdir functionaltestresults
-        pip install wheel && pip install selenium && pip install pytest==4.6.11 && cd ./Tests && python -m pytest functional_tests/ --webAppUrl=https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net/ --junitxml=../functionaltestresults/functional-test-results.xml
-
-    # Uploading functional test results to artifact store
-    - name: Upload functional test results to Artifact
-      continue-on-error: false
-      uses: actions/upload-artifact@v2
-      with:
-        name: FunctionalTestResults
-        path: ./functionaltestresults/functional-test-results.xml
