@@ -25,7 +25,7 @@ SECRET_KEY = 'i3zsk=@pakkv8$5$o1-sx7c+5b*g^3d%5kt-00*8uq+ar4wzw='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['middleware-hackai-backend.azurewebsites.net', 'middleware-hackai-frontend.azurewebsites.net', 'localhost']
+ALLOWED_HOSTS = ['middleware-hackai-backend.azurewebsites.net', 'middleware-hackai-frontend.azurewebsites.net', 'localhost', '127.0.0.1', 'kubernetes.docker.internal']
 
 
 # Application definition
@@ -54,11 +54,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
-    'http://middleware-hackai-frontend.azurewebsites.net'
+    'https://middleware-hackai-frontend.azurewebsites.net'
 )
 
 ROOT_URLCONF = 'mwbackend.urls'
@@ -130,3 +130,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
