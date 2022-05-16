@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api_login.apps.ApiLoginConfig',
+    'logic.apps.ApiLoginConfig',
     'rest_framework',
     'corsheaders',
 ]
@@ -58,7 +58,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
-    'http://middleware-hackai-frontend.azurewebsites.net'
+    'https://middleware-hackai-frontend.azurewebsites.net'
 )
 
 ROOT_URLCONF = 'mwbackend.urls'

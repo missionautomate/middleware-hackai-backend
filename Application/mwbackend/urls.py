@@ -19,6 +19,6 @@ from mwbackend.views import test
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('api_login.urls')),
+    path('', include('logic.urls')),
     path('test/', test),
 ]
