@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from mwbackend.views import test
+from mwbackend.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('api_login.urls')),
     path('test/', test),
+    path('get_image/', get_image),
+    path('put_image/', put_image)
 ]
