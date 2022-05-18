@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('logic.urls')),
     path('test/', test),
     path('get_image/', get_image),
+    path('pull_images_for_current_user', pull_images_for_current_user),
     path('put_image/', put_image)
 ]
