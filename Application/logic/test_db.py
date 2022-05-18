@@ -18,8 +18,8 @@ def get_gallery(id):
 def add_user(data):
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()   
-    command = "INSERT INTO users (user_id, user_fname, user_lname, user_email)VALUES (%s, %s, %s, %s)"
-    cursor.execute(command, (data[0], data[1], data[2], data[3]))
+    command = "INSERT INTO users (googleId, fName, lName, email, imageUrl)VALUES (%s, %s, %s, %s, %s)"
+    cursor.execute(command, (data.googleId, data.givenName, data.familyName, data.email, data.imageUrl))
     cursor.close()
     conn.commit()
 

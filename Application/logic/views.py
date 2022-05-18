@@ -34,6 +34,7 @@ def google_login(request):
         #     google_login_data_serializer.save()
 
         if(oauth_request.status_code == 200):
+            add_user(received_data[1])
             return(HttpResponse(status=200))
         else:
             return(HttpResponse(status=401))
