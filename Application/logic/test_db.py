@@ -24,19 +24,19 @@ def add_user(data):
     conn.commit()
 
 # print the connection string we will use to connect
-print ("Connecting to database\n	->%s" % (conn_string))
+# print ("Connecting to database\n	->%s" % (conn_string))
 
 # get a connection, if a connect cannot be made an exception will be raised here
-conn = psycopg2.connect(conn_string)
+# conn = psycopg2.connect(conn_string)
 
 # conn.cursor will return a cursor object, you can use this cursor to perform queries
-cursor = conn.cursor()
-command = """
-        CREATE TABLE gallery (
-            google_id SERIAL PRIMARY KEY,
-            imgLink VARCHAR(255) NOT NULL
-        )
-        """
+# cursor = conn.cursor()
+# command = """
+#         CREATE TABLE gallery (
+#             google_id SERIAL PRIMARY KEY,
+#             imgLink VARCHAR(255) NOT NULL
+#         )
+#         """
 # command = "INSERT INTO users (user_id, user_fname, user_lname, user_email)VALUES (%s, %s, %s, %s)"
 # print ("Connected!\n")
 
@@ -49,8 +49,8 @@ command = """
 # command = """
 #         SELECT * FROM users """
 # cursor.execute(command, [23213])
-cursor.execute(command)
+# cursor.execute(command)
 # result = cursor.fetchone
 # print(result)
-cursor.close()
-conn.commit()
+# cursor.close()
+# conn.commit()

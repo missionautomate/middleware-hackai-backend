@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 
 from .serializers import GoogleUserSerializer
 from .models import GoogleUser
-from test_db import get_gallery, add_user
+from .test_db import get_gallery, add_user
 
 import requests
 
@@ -46,6 +46,8 @@ def galery_pull(request):
         data = get_gallery(google_id)
         if(data):
             return(data)
+        else:
+            return(HttpResponse(status=204))
 
 @api_view(['POST'])
 def new_user(request):

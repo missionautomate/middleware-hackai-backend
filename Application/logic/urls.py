@@ -4,6 +4,6 @@ from . import views
 
 urlpatterns = [ 
     path('login', views.google_login),
-    path('addUser', views.new_user),
-    path('getImg', views.galery_pull)
+    path('add-user', views.new_user),
+    path('get-img', views.galery_pull)
 ]
