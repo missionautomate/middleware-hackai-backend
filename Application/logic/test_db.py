@@ -1,7 +1,7 @@
 from click import command
 import psycopg2
 
-conn_string = "postgres://missionautomate:Parola1234%23@postgre-db-server.postgres.database.azure.com:5432/postgres"
+conn_string = "postgres://missionautomate:Parola1234@postgre-db-server.postgres.database.azure.com/postgres?sslmode=require"
 
 def get_gallery(id):
     conn = psycopg2.connect(conn_string)
@@ -20,6 +20,14 @@ def add_user(data):
     cursor = conn.cursor()   
     command = "INSERT INTO users (googleId, fName, lName, email, imageUrl)VALUES (%s, %s, %s, %s, %s)"
     cursor.execute(command, (data.googleId, data.givenName, data.familyName, data.email, data.imageUrl))
+    cursor.close()
+    conn.commit()
+
+def add_image_db(data):
+    conn = psycopg2.connect(conn_string)
+    cursor = conn.cursor()
+    command = "INSERT INTO gallery (googleId, imgName) VALUES (%s, %s)"
+    cursor.execute(command, (data['googleId'], data['imgName']))
     cursor.close()
     conn.commit()
 
