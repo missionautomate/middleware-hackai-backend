@@ -31,6 +31,15 @@ def add_image_db(data):
     cursor.close()
     conn.commit()
 
+def remove_image_db(data):
+    conn = psycopg2.connect(conn_string)
+    cursor = conn.cursor()
+    command = "DELETE FROM gallery WHERE googleID = %s AND imgName = %s"
+    cursor.execute(command, (data['googleId'], data['imgName']))
+    cursor.close()
+    conn.commit()
+
+
 # print the connection string we will use to connect
 # print ("Connecting to database\n	->%s" % (conn_string))
 
