@@ -58,7 +58,7 @@ def put_image(request):
     else:
         return HttpResponseNotAllowed()
 
-def get_images(request, count=2):
+def get_images(request, count=10):
     if request.method == 'GET':
         url_base = 'https://imagesstoragesuperhero.blob.core.windows.net/generatedimages/'
         blobs_list = container_client.list_blobs()
@@ -66,11 +66,13 @@ def get_images(request, count=2):
         try:
             count = int(request.GET.get('count', ''))
         except:
-            count = 5
+            count = 10
         filter_date = datetime.now().strftime("%Y-%m-%d %H:%M")
+        counter = 0
         for idx, blob in enumerate(blobs_list):
             if filter_date<str(blob.creation_time):
-                if idx == count:
+                counter+=1
+                if counter == count:
                     break
                 res.append({'filename:': blob.name, 'path': url_base + blob.name})
 
@@ -81,7 +83,7 @@ def get_images(request, count=2):
 
 def generate_images(request):
     if request.method == 'GET':
-        number_of_images = 5
+        number_of_images = 10
 
         for x in range(number_of_images):
             filename = str(uuid.uuid4()) + '.png'
