@@ -5,11 +5,14 @@ import datetime
 import uuid
 import requests
 import base64
-import os
-import json
+import random
+from io import BytesIO
+from PIL import Image
+import numpy as np
+from datetime import datetime
 
 azure_conn_string = "DefaultEndpointsProtocol=https;AccountName=imagesstoragesuperhero;AccountKey=pDHER3XVErQzE71GGNiiCUTyH8aaSifOuu1/LY2PGEpLP0+dA+uZ+H10wCrwRn79dYfGPkKlF06D+AStHPY+9w==;EndpointSuffix=core.windows.net"
-azure_photo_container = "savedimages"
+azure_photo_container = "generatedimages"
 
 blob_service_client = BlobServiceClient.from_connection_string(conn_str=azure_conn_string)
 
@@ -55,21 +58,21 @@ def put_image(request):
     else:
         return HttpResponseNotAllowed()
 
-def get_images(request, count=1):
+def get_images(request, count=2):
     if request.method == 'GET':
-        url_base = 'https://imagesstoragesuperhero.blob.core.windows.net/savedimages/'
+        url_base = 'https://imagesstoragesuperhero.blob.core.windows.net/generatedimages/'
         blobs_list = container_client.list_blobs()
         res = []
-
         try:
             count = int(request.GET.get('count', ''))
         except:
-            count = 1
-
+            count = 5
+        filter_date = datetime.now().strftime("%Y-%m-%d %H:%M")
         for idx, blob in enumerate(blobs_list):
-            if idx == count:
-                break
-            res.append({'filename:': blob.name, 'path': url_base + blob.name})
+            if filter_date<str(blob.creation_time):
+                if idx == count:
+                    break
+                res.append({'filename:': blob.name, 'path': url_base + blob.name})
 
         return JsonResponse({'images':res})
     else:
@@ -78,23 +81,35 @@ def get_images(request, count=1):
 
 def generate_images(request):
     if request.method == 'GET':
-        number_of_images = 1
+        number_of_images = 5
 
         for x in range(number_of_images):
             filename = str(uuid.uuid4()) + '.png'
-            res = requests.get('http://127.0.0.1:8000/test-endpoint')
-
+            headers = {"Content-Type": "application/json",
+            "Authorization":"Bearer 3FThkGH2HIO7IwKEdrvN2HgInbr8R9XI",}
+            data = {
+                "data": random.randint(0,2**32-1),
+                }
+            endpoint_url = 'https://superhero-endpoint2.centralus.inference.ml.azure.com/score'
+            res = requests.post(url=endpoint_url,headers=headers,json=data)
+            image =  Image.fromarray(np.array(res.json(), dtype="uint8"))
+            buff = BytesIO()
+            image.save(buff,format="png")
+            image = base64.b64encode(buff.getvalue()).decode("utf-8")
+            image = base64.b64decode(image)   
             if res.status_code != 200:
                 print("[ERROR]Failed to fetch image from endpoint")
                 HttpResponse(503) 
-
+            
             ##TODO check content
             try:
-                container_client.upload_blob(filename, res.content)
+                container_client.upload_blob(filename, image)
+                
             except Exception as e:
                 print(e)
                 print("[ERROR]Failed to upload photo to Azure Blob")
                 return HttpResponse("[ERROR]Upload failed")
+                
 
         return HttpResponse()
     else:
