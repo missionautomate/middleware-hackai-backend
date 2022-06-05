@@ -83,7 +83,7 @@ def get_images(request, count=10):
 
 def generate_images(request):
     if request.method == 'GET':
-        number_of_images = 10
+        number_of_images = 5
 
         for x in range(number_of_images):
             filename = str(uuid.uuid4()) + '.png'
