@@ -1,4 +1,3 @@
-from click import command
 import psycopg2
 
 conn_string = "postgres://missionautomate:Parola1234@postgre-db-server.postgres.database.azure.com/postgres?sslmode=require"
