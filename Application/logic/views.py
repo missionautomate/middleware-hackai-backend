@@ -13,6 +13,7 @@ from .test_db import add_image_db, get_gallery, add_user, remove_image_db
 
 
 import requests
+import json
 
 
 class GoogleUserViewSet(viewsets.ModelViewSet):
@@ -32,8 +33,9 @@ def galery_pull(request):
         received_data = JSONParser().parse(request)
         print(str(received_data))
         data = get_gallery(received_data)
+        data = list(json.dumps(data))
         if(data):
-            return(HttpResponse(data))
+            return(HttpResponse(list(data)))
         else:
             return(HttpResponse(status=204))
 
