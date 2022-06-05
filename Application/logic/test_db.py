@@ -6,36 +6,33 @@ conn_string = "postgres://missionautomate:Parola1234@postgre-db-server.postgres.
 def get_gallery(id):
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
-    command = """
-            SELECT imgLink
-            FROM gallery
-            WHERE googleId = 
-    """
-    command += str(id)
+    command = """SELECT imgName FROM gallery WHERE azureId = '"""
+    command += str(id) 
+    command += "'"
     cursor.execute(command)
-    return(cursor.fetchall)
+    return(cursor.fetchall())
 
 def add_user(data):
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()   
-    command = "INSERT INTO users (googleId, fName, lName, email, imageUrl)VALUES (%s, %s, %s, %s, %s)"
-    cursor.execute(command, (data.googleId, data.givenName, data.familyName, data.email, data.imageUrl))
+    command = "INSERT INTO users (azureId, name, email)VALUES (%s, %s, %s)"
+    cursor.execute(command, (data[0], data[1], data[2]))
     cursor.close()
     conn.commit()
 
 def add_image_db(data):
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
-    command = "INSERT INTO gallery (googleId, imgName) VALUES (%s, %s)"
-    cursor.execute(command, (data['googleId'], data['imgName']))
+    command = "INSERT INTO gallery (azureId, imgName) VALUES (%s, %s)"
+    cursor.execute(command, (data['azureId'], data['imgName']))
     cursor.close()
     conn.commit()
 
 def remove_image_db(data):
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
-    command = "DELETE FROM gallery WHERE googleID = %s AND imgName = %s"
-    cursor.execute(command, (data['googleId'], data['imgName']))
+    command = "DELETE FROM gallery WHERE azureId = %s AND imgName = %s"
+    cursor.execute(command, (data['azureId'], data['imgName']))
     cursor.close()
     conn.commit()
 
