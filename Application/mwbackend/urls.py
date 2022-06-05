@@ -19,8 +19,7 @@ from mwbackend.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', include('api_login.urls')),
-    #path('', include('logic.urls')),#adauga pth de la logic
+    path('', include('logic.urls')),
     path('test', test),
     path('get-image', get_image),
     path('put-image', put_image),
