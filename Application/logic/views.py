@@ -13,6 +13,7 @@ from .test_db import add_image_db, get_gallery, add_user, remove_image_db
 
 
 import requests
+import json
 
 
 class GoogleUserViewSet(viewsets.ModelViewSet):
@@ -23,32 +24,18 @@ class GoogleUserViewSet(viewsets.ModelViewSet):
 def google_login(request):
     if request.method == 'POST':
         received_data = JSONParser().parse(request)
-        token = received_data[0]
-        google_login_data = received_data[1]
-        google_login_data_serializer = GoogleUserSerializer(data=google_login_data)
-
-        oauth_url = 'https://oauth2.googleapis.com/tokeninfo'
-        token_obj = {'access_token': token}
-
-        oauth_request = requests.post(oauth_url, data=token_obj)
-
-        # if google_login_data_serializer.is_valid():
-        #     google_login_data_serializer.save()
-
-        if(oauth_request.status_code == 200):
-            add_user(received_data[1])
-            return(HttpResponse(status=200))
-        else:
-            return(HttpResponse(status=401))
+        add_user(received_data)
+        return(HttpResponse(status=200))
 
 @api_view(['POST'])
 def galery_pull(request):
     if request.method == 'POST':
         received_data = JSONParser().parse(request)
-        google_id = received_data[0]
-        data = get_gallery(google_id)
+        print(str(received_data))
+        data = get_gallery(received_data)
+        data = list(json.dumps(data))
         if(data):
-            return(data)
+            return(HttpResponse(list(data)))
         else:
             return(HttpResponse(status=204))
 
