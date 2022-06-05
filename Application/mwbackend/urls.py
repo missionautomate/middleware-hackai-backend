@@ -20,8 +20,10 @@ from mwbackend.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('logic.urls')),
-    path('test/', test),
-    path('get_image/', get_image),
-    path('pull_images_for_current_user', pull_images_for_current_user),
-    path('put_image/', put_image)
+    path('test', test),
+    path('get-image', get_image),
+    path('put-image', put_image),
+    path('generate-images', generate_images),
+    path('test-endpoint', test_endpoint),
+    path('get-images', get_images)
 ]
