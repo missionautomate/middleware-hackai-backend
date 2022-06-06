@@ -2,7 +2,7 @@ name: Build and Deploy Python app to Azure
 on:
   push:
     branches:
-      - test-deploy
+      - master
 
 env:
   AZURE_WEBAPP_NAME: "middleware-hackai-backend"    # set this to your application's name
