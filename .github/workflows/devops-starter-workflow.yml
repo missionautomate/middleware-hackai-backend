@@ -28,6 +28,8 @@ jobs:
     - name: Install Dependancies
       continue-on-error: false
       run: |
+        apt install libpq-dev python3-dev
+        apt install build-essential
         pip install -r Application/requirements.txt
 
     - name: Building web app
