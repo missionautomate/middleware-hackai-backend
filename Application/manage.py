@@ -2,10 +2,9 @@
 import os
 import sys
 
-os.system('apt install -y libpq-dev python3-dev build-essential')
-os.system('pip install psycopg2')
-
 if __name__ == '__main__':
+    os.system('apt install -y libpq-dev python3-dev build-essential')
+    os.system('pip install psycopg2')
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mwbackend.settings')
     try:
         from django.core.management import execute_from_command_line
