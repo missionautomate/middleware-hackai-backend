@@ -24,7 +24,7 @@ except Exception as e:
 
 def test(request):
     now = datetime.datetime.now()
-    html = "<html><body>Time is relative said someone: %s.</body></html>" % now
+    html = "<html><body>Time is relative, this is a new deploy: %s.</body></html>" % now
     return HttpResponse(html)
 
 def get_image(request):
