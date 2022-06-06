@@ -24,9 +24,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-        
-    - name: psycopg2 prerequisites
-      run: sudo apt-get install libpq-dev
 
     - name: Install Dependancies
       continue-on-error: false
