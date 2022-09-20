@@ -11,7 +11,7 @@ from PIL import Image
 import numpy as np
 from datetime import datetime
 
-azure_conn_string = "DefaultEndpointsProtocol=https;AccountName=imagesstoragesuperhero;AccountKey=pDHER3XVErQzE71GGNiiCUTyH8aaSifOuu1/LY2PGEpLP0+dA+uZ+H10wCrwRn79dYfGPkKlF06D+AStHPY+9w==;EndpointSuffix=core.windows.net"
+azure_conn_string = "DefaultEndpointsProtocol=https;AccountName=storageaccount1337733113;AccountKey=c+caxAwQVXEnL/V+yBspvugzYG64Ua/CED1r+qn0N7BxXkfyeIMGrnixb2XzEDbiHSJ35cAkoow1+ASt3nj51Q==;EndpointSuffix=core.windows.net"
 azure_photo_container = "generatedimages"
 
 blob_service_client = BlobServiceClient.from_connection_string(conn_str=azure_conn_string)
